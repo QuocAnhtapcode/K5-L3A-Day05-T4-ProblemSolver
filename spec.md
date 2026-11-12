@@ -126,13 +126,13 @@ S04 không bị bỏ qua. Thiếu hẳn nguồn còn nguy hiểm hơn chọn nh�
 |---|---|---|---|---|
 | `yeu_cau_bang_chung` | **Tự làm**, theo mẫu trung lập, chỉ hỏi phần còn thiếu, giới hạn số lần | Hỏi sai làm hai bên tốn thời gian, có thể lỡ hạn. Tin đã tới thì không rút được; chỉ gửi bổ sung và lưu lịch sử, không làm nút hoàn tác giả. | Không cần duyệt từng mẫu. Ngoài mẫu hoặc xin tài liệu nhạy cảm thì dừng, chuyển trưởng nhóm. Quá hạn phản hồi không tự kết luận. | Loại để AI viết tự do, vì có thể buộc tội hoặc xin dữ liệu riêng. Loại duyệt từng mẫu, vì S03 phải chờ mà không bảo vệ thêm được gì. |
 | `chuyen_truong_nhom` | **Tự làm** khi nguồn mâu thuẫn, thiếu nguồn quan trọng, còn tranh chấp, nghi hàng giả, hoặc sắp hết hạn | Chuyển nhầm làm nhân viên thêm việc, người dùng chờ lâu hơn. Rút được trước khi tiếp nhận; sau đó chỉ gửi cập nhật, không xoá lịch sử. | Không cần người mua duyệt. Hiện lý do, trạng thái và nút rút khi còn chờ. Chưa ai nhận thì giữ trạng thái chờ, không hứa thời gian giải quyết, không tự đóng. | Loại duyệt mọi lần, vì S01 và S10 bị chậm bảo vệ. Loại chuyển mọi ca, vì S03 đủ dữ kiện sẽ chờ vô ích. |
-| `soan_hoan_tien` | **Cần nhân viên sàn duyệt.** AI chỉ phân tích và đề xuất | Hoàn sai: người bán mất tiền, có thể mất cả hàng. Tiền đã về người mua thì khó đảo. | Nhân viên thấy đúng đơn, số tiền, mô tả lúc đặt, bằng chứng hai bên, trạng thái phản hồi và điểm chưa chắc. Chỉ duyệt khi hai bên đã có cơ hội phản hồi. Không ai duyệt kịp thì chờ hoặc đẩy ưu tiên, không tự hoàn. | Loại tự làm, vì S02. Loại để người mua duyệt, vì không bảo vệ người bán. Loại cấm hẳn, vì S03 cần một lối giải quyết hợp lệ. |
+| `soan_hoan_tien` | **Cần nhân viên sàn duyệt.** AI chỉ phân tích và đề xuất | Hoàn sai: người bán mất tiền, có thể mất cả hàng. Tiền đã về người mua thì khó đảo. | Nhân viên thấy đúng đơn, số tiền, mô tả lúc đặt, bằng chứng hai bên, trạng thái phản hồi và điểm chưa chắc. Chỉ duyệt khi hồ sơ đã ghi nhận phản hồi của cả hai bên. Nếu hết mốc mà thiếu phản hồi hoặc chưa có người duyệt, hồ sơ tiếp tục mở để nhân viên theo dõi. | Loại tự làm, vì S02. Loại để người mua duyệt, vì không bảo vệ người bán. Loại cấm hẳn, vì S03 cần một lối giải quyết hợp lệ. |
 | `tu_choi_khieu_nai` | **Cần nhân viên sàn duyệt.** AI không tự đóng hồ sơ | Từ chối sai: người mua mất tiền, giữ hàng sai, khó mở lại. S01 và S04 cho thấy nguồn sai dẫn tới kết luận sai. | Cùng gói bằng chứng như hoàn tiền, kèm lý do cụ thể và phần hai bên đã phản hồi. Quá hạn duyệt không mặc định từ chối. | Loại từ chối "cho an toàn", vì an toàn cho bên này là hại bên kia. Loại để người bán duyệt, vì thiên lệch. Loại cấm hẳn, vì người bán đúng cũng cần một kết quả. |
 | `phat_shop` | **Cấm** trong luồng này, không có nút | Phạt sai ảnh hưởng uy tín và doanh thu cả shop, khó đảo hết hậu quả. | Dùng `chuyen_truong_nhom` để trưởng nhóm điều phối bộ phận chuyên trách. Không hứa thời điểm hay kết quả xử phạt. | Loại tự làm và duyệt nhanh, vì S06 và S07 mới chỉ là cáo buộc, chưa điều tra. |
 
 ### 4.2 Tool khó xếp nhất: `soan_hoan_tien`
 
-Mức nào cũng có giá. Tự làm thì S02 làm người bán mất tiền. Bắt duyệt thì S03 chậm, S10 có thể lỡ hạn. Cấm hẳn thì khiếu nại hợp lệ không có lối giải quyết. Nhóm chốt: AI tự làm phần chuẩn bị ít rủi ro, nhân viên chịu trách nhiệm duyệt tiền. Khi sắp hết hạn, AI cảnh báo và chuyển trưởng nhóm chứ không giải quyết bằng cách tự hoàn.
+Mức nào cũng có giá. Tự làm thì S02 làm người bán mất tiền. Duyệt tiền làm S03 chờ kết quả. Với S10, nếu người mua bị yêu cầu chờ duyệt mới được nộp yêu cầu, họ có thể lỡ hạn. Cấm hẳn thì khiếu nại hợp lệ không có lối giải quyết. Nhóm cho AI hướng dẫn bước nộp yêu cầu ngay và giao việc duyệt tiền cho nhân viên. Nếu gần hạn, hiển thị hạn nộp và hướng dẫn người mua hoàn tất bước này. Việc chuyển trưởng nhóm chỉ bổ sung hỗ trợ, còn hạn nộp lấy từ hồ sơ của đơn.
 
 **Kịch bản thảo luận minh họa:** bốn góc nhìn dưới đây giúp nhóm tập phản biện và giải thích lựa chọn; đây không phải biên bản một cuộc họp đã được ghi nhận.
 
@@ -147,7 +147,7 @@ Mức nào cũng có giá. Tự làm thì S02 làm người bán mất tiền. B
 
 ### 4.3 Thử mức trên ba kịch bản
 
-Cột cuối tổng hợp kết quả kỹ thuật đã ghi trong `VERIFICATION.md`, ảnh và log lưu trong project; các lần kiểm tra này được thực hiện khi chuẩn bị prototype, trước lần đổi tên tool.
+Cột cuối tổng hợp kết quả kiểm tra giao diện khi chuẩn bị prototype. Ảnh và log có trong [`prototype/evidence/`](prototype/evidence/README.md). Kết quả kiểm tra riêng điều kiện duyệt tiền của backend được ghi ở §6.
 
 | Ca | Thiết kế dự kiến làm gì | Cái sai có bị chặn? Còn tự làm khi lẽ ra phải hỏi? | Người dùng bình thường có chờ vô ích? | Kết quả thực tế |
 |---|---|---|---|---|
@@ -157,9 +157,13 @@ Cột cuối tổng hợp kết quả kỹ thuật đã ghi trong `VERIFICATION.
 
 ### 4.4 Tách phân tích khỏi hành động
 
-Đầu ra của AI là khuyến nghị có căn cứ, không phải lệnh. Trace tách `aiRecommendation` / `rawAnalysis` khỏi `guardrailsApplied` / `policyActions`. Luật ứng dụng tự chuyển khi thiếu bản lưu hoặc mô tả đã đổi, và tự gửi mẫu xin phần còn thiếu tối đa một lần. Giao dịch mô phỏng chỉ chạy khi có `reviewer`, `approved=true`, lý do dài từ 10 ký tự, có bản lưu lúc đặt, và **cả hai bên đã phản hồi**. Hết hạn cũng không bỏ qua các điều kiện này. Có model thật cũng không mở thêm quyền phạt shop. Nếu thêm tool mới, nhóm phải bổ sung vào bảng 4.1 trước khi dùng.
+Trace ghi riêng khuyến nghị của AI (`aiRecommendation`, `rawAnalysis`) và hành động do ứng dụng thực hiện (`guardrailsApplied`, `policyActions`). Ứng dụng tự chuyển khi thiếu bản lưu hoặc mô tả đã đổi, và tự gửi mẫu xin phần còn thiếu tối đa một lần.
 
-**Mức tự chủ đã đổi lời hứa với người dùng:** sản phẩm không hứa "AI xử thắng cho bạn ngay". Lời hứa là: "AI giúp bạn hiểu căn cứ, chuẩn bị hồ sơ và biết bước tiếp theo; hoàn tiền hay từ chối do nhân viên sàn quyết sau khi hai bên có cơ hội phản hồi."
+Trước khi thực hiện `soan_hoan_tien` hoặc `tu_choi_khieu_nai`, backend kiểm tra hồ sơ chưa có quyết định, vai mô phỏng là `reviewer`, xác nhận `approved=true`, lý do có ít nhất 10 ký tự sau khi bỏ khoảng trắng hai đầu và tối đa 2.000 ký tự ở đầu vào, phản hồi của cả hai bên, và bản lưu lúc đặt có cả nội dung lẫn mốc ghi nhận. Mốc quá hạn không thay thế điều kiện nào. Nếu đã có quyết định, cả yêu cầu lặp lại lẫn yêu cầu đảo sang quyết định kia đều bị chặn. `phat_shop` bị chặn với mọi vai.
+
+Độ dài của lý do chỉ xác nhận nhân viên đã nhập đủ chữ. Người duyệt vẫn phải kiểm tra lý do có khớp với bằng chứng và đúng đơn hay không. Vai `reviewer` trong prototype là dữ liệu mô phỏng; triển khai thật cần xác thực nhân viên và phân quyền phía máy chủ. Nếu thêm tool, nhóm cập nhật mức và điều kiện thực thi trong bảng 4.1.
+
+**Mức tự chủ đã đổi lời hứa với người dùng:** sản phẩm không hứa "AI xử thắng cho bạn ngay". Lời hứa là: "AI giúp bạn hiểu căn cứ, chuẩn bị hồ sơ và biết bước tiếp theo; hoàn tiền hay từ chối do nhân viên sàn quyết khi hồ sơ đã ghi nhận phản hồi của hai bên."
 
 ## §5. Prototype
 
@@ -203,6 +207,19 @@ Cột cuối tổng hợp kết quả kỹ thuật đã ghi trong `VERIFICATION.
 |---|---|---|---|---|
 | S01 changed-description | Pass | Pass | Chưa đạt đầy đủ | Log và ảnh chứng minh dùng đúng hai phiên bản, chuyển người và không tự chuyển tiền. Đã có đường sửa; chưa đủ bằng chứng đánh giá việc AI hiểu đúng các nội dung sửa khác nhau. Lỗi hỏi lại bản lưu ở lần gọi đầu đã được chặn bằng luật ứng dụng. |
 | S02 seller-correct | Pass | Pass | Chưa đạt đầy đủ | Lần kiểm tra mô phỏng ghi nhận tem khớp, yêu cầu cách đo, phần phản hồi shop và sửa nội dung. Không tự quyết tiền. Nhánh mô phỏng dựa trên kịch bản cố định nên chưa chứng minh nhận định thay đổi đúng theo mọi nội dung bổ sung. |
+
+### Kiểm tra điều kiện duyệt tiền cho E2
+
+Chạy `npm test` trong `prototype/` cho kết quả **13/13 test đạt**. Kiểm tra bổ sung trực tiếp với `applyAction` trong [`prototype/domain.mjs`](prototype/domain.mjs) dùng các ca sau:
+
+| Ca | Thao tác kiểm tra | Kết quả quan sát |
+|---|---|---|
+| S01 · Mô tả đã sửa | Đặt giờ kiểm tra sau cả hạn shop phản hồi và mốc nhân viên cập nhật. Khi shop vẫn chưa phản hồi, thử hoàn và từ chối với vai nhân viên đã xác nhận. | Cả hai trả `BOTH_SIDES_REQUIRED`. Hồ sơ vẫn mở và trạng thái tiền không đổi. |
+| S02 · Người bán có thể đúng | Với phản hồi hai bên có sẵn, thử từng quyết định bằng vai người mua hoặc người bán đã đánh dấu xác nhận. Thử lại bằng vai nhân viên nhưng bỏ xác nhận hoặc nhập lý do ngắn hơn 10 ký tự sau khi bỏ khoảng trắng. | Sai vai hoặc thiếu xác nhận trả `HUMAN_APPROVAL_REQUIRED`. Lý do quá ngắn trả `REVIEW_REASON_REQUIRED`. |
+| S04 · Thiếu bản lưu | Ghi thêm phản hồi shop để đủ hai bên, rồi thử hoàn và từ chối với vai nhân viên, có xác nhận và lý do hợp lệ. | Cả hai trả `MISSING_PURCHASE_SNAPSHOT`. Nhân viên phải bổ sung nguồn trước khi có thể quyết định. |
+| S03 · Gửi nhầm size | Duyệt hoàn mô phỏng với đủ điều kiện, sau đó gửi lại yêu cầu hoàn và thử từ chối trên cùng hồ sơ. | Lần đầu ghi đúng một sự kiện hoàn mô phỏng. Hai lần sau trả `CASE_CLOSED`. |
+
+Cả 14 yêu cầu bị chặn đều giữ nguyên trạng thái và lịch sử hồ sơ. Phép thử quá hạn xác nhận yêu cầu duyệt vẫn bị chặn khi thiếu phản hồi. Prototype chỉ hiển thị các mốc thời gian, còn việc nhắc hoặc chuyển cấp theo giờ thuộc thiết kế vận hành.
 
 **Giới hạn của bài:** ảnh và tem giả lập không chứng minh được việc kiểm định hàng thật; vai nhân viên chỉ là mô phỏng; chưa đo độ tin cậy trên dữ liệu thật; ba tiêu chí này chưa đủ để phát hành một sản phẩm thật.
 
