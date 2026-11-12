@@ -1,0 +1,162 @@
+{
+  "recordedAt": "2026-11-12T07:38:35.537Z",
+  "purpose": "LAB5 T4: real AI compares complaint against purchase-time description",
+  "dataType": "synthetic_fixture_only",
+  "scenarioId": "changed-description",
+  "mode": "live",
+  "analysis": {
+    "summary": "Mô tả sản phẩm có sự khác biệt giữa lúc đặt hàng và lúc nhận hàng. Ban đầu, mô tả ghi dung tích 6 lít, nhưng sau đó đã sửa thành 5 lít.",
+    "decision": "yeu_cau_bang_chung",
+    "reason": "Cần xác minh bằng chứng về mô tả sản phẩm tại thời điểm đặt hàng để xử lý khiếu nại.",
+    "evidence": [
+      {
+        "source": "originalDescription",
+        "detail": "Nồi chiên mẫu A, dung tích công bố 6 lít, bảo hành mô phỏng 12 tháng."
+      },
+      {
+        "source": "currentDescription",
+        "detail": "Nồi chiên mẫu A, dung tích công bố 5 lít, bảo hành mô phỏng 12 tháng."
+      },
+      {
+        "source": "buyerMessage",
+        "detail": "Lúc mua ghi 6 lít, hàng nhận tem 5 lít. Giờ shop sửa mô tả thành 5 lít rồi, tôi phải làm sao?"
+      },
+      {
+        "source": "latestBuyerMessage",
+        "detail": "Lúc đặt mô tả ghi 6 lít, giờ shop sửa thành 5 lít. Tôi nhận nồi 5 lít; bước tiếp theo là gì?"
+      }
+    ],
+    "missingEvidence": [
+      "Bản lưu mô tả sản phẩm tại thời điểm đặt hàng"
+    ],
+    "messageToBuyer": "Vui lòng cung cấp bản lưu mô tả sản phẩm tại thời điểm đặt hàng để chúng tôi có thể xử lý khiếu nại của bạn.",
+    "messageToSeller": "Bạn cần cung cấp bằng chứng liên quan đến mô tả sản phẩm lúc đặt hàng để hỗ trợ giải quyết khiếu nại này."
+  },
+  "state": {
+    "scenarioId": "changed-description",
+    "status": "escalated",
+    "buyerResponded": true,
+    "sellerResponded": false,
+    "sellerResponse": "",
+    "escalated": true,
+    "escalationReversible": true,
+    "decision": null,
+    "moneyMoved": false,
+    "updatedAt": "2026-11-12T07:38:35.528Z",
+    "history": [
+      {
+        "id": "cf30df73-9bdc-46e5-ba45-814a18484147",
+        "action": "chuyen_truong_nhom",
+        "actor": "system",
+        "at": "2026-11-12T07:38:35.528Z",
+        "message": "Đã chuyển hồ sơ MÔ PHỎNG cho trưởng nhóm. Chưa có người tiếp nhận; bạn có thể rút yêu cầu chuyển. Hạn cập nhật nhân viên là 24 giờ theo quy ước mô phỏng."
+      }
+    ],
+    "mocked": true
+  },
+  "policyActions": [
+    {
+      "action": "chuyen_truong_nhom",
+      "reason": "purchase_description_changed"
+    }
+  ],
+  "trace": {
+    "id": "50e03531-d435-4d3d-9737-0748ca6d2403",
+    "mode": "live",
+    "model": "gpt-4o-mini-2024-07-18",
+    "responseId": "resp_0ecaa2b41749461e016af56cf816a487d28aea6c7d0737f0f1",
+    "createdAt": "2026-11-12T07:38:28.483Z",
+    "scenarioId": "changed-description",
+    "requestId": "req_d3c84fbcd807456eab118f65debcc7df",
+    "aiRecommendation": "yeu_cau_bang_chung",
+    "guardrailsApplied": [],
+    "policyActions": [
+      {
+        "action": "chuyen_truong_nhom",
+        "reason": "purchase_description_changed"
+      }
+    ],
+    "input": {
+      "scenario": {
+        "simulatedNow": "2026-11-12T14:00:00+07:00",
+        "receivedAt": "2026-11-08T10:00:00+07:00",
+        "claimDeadline": "2026-11-15T23:59:00+07:00",
+        "sellerDeadline": "2026-11-13T14:00:00+07:00",
+        "reviewerDeadline": "2026-11-13T14:00:00+07:00",
+        "policyNote": "Dữ liệu giả cho LAB5. Nhóm giả định thời hạn yêu cầu 7 ngày, người bán phản hồi trong 24 giờ, nhân viên cập nhật trong 24 giờ. Hạn cụ thể trong hồ sơ là quy ước mô phỏng; không phải chính sách Shopee. Quá hạn không tự động xử bên nào thua. Không có tiền thật hoặc xử phạt thật.",
+        "id": "changed-description",
+        "title": "Mô tả đã sửa sau khi mua",
+        "orderId": "DEMO-T4-001",
+        "product": "Nồi chiên mẫu A",
+        "amount": 1290000,
+        "originalDescription": "Nồi chiên mẫu A, dung tích công bố 6 lít, bảo hành mô phỏng 12 tháng.",
+        "currentDescription": "Nồi chiên mẫu A, dung tích công bố 5 lít, bảo hành mô phỏng 12 tháng.",
+        "originalCapturedAt": "2026-11-06T09:30:00+07:00",
+        "updatedAt": "2026-11-10T16:00:00+07:00",
+        "buyerMessage": "Lúc mua ghi 6 lít, hàng nhận tem 5 lít. Giờ shop sửa mô tả thành 5 lít rồi, tôi phải làm sao?",
+        "buyerEvidence": [
+          "Ảnh giả tem sản phẩm ghi 5L.",
+          "Ảnh giả mô tả khi đặt ghi 6L, khớp bản lưu của đơn."
+        ],
+        "sellerResponse": "",
+        "sellerEvidence": []
+      },
+      "message": "Lúc đặt mô tả ghi 6 lít, giờ shop sửa thành 5 lít. Tôi nhận nồi 5 lít; bước tiếp theo là gì?",
+      "sellerResponse": ""
+    },
+    "analysis": {
+      "summary": "Mô tả sản phẩm có sự khác biệt giữa lúc đặt hàng và lúc nhận hàng. Ban đầu, mô tả ghi dung tích 6 lít, nhưng sau đó đã sửa thành 5 lít.",
+      "decision": "yeu_cau_bang_chung",
+      "reason": "Cần xác minh bằng chứng về mô tả sản phẩm tại thời điểm đặt hàng để xử lý khiếu nại.",
+      "evidence": [
+        {
+          "source": "originalDescription",
+          "detail": "Nồi chiên mẫu A, dung tích công bố 6 lít, bảo hành mô phỏng 12 tháng."
+        },
+        {
+          "source": "currentDescription",
+          "detail": "Nồi chiên mẫu A, dung tích công bố 5 lít, bảo hành mô phỏng 12 tháng."
+        },
+        {
+          "source": "buyerMessage",
+          "detail": "Lúc mua ghi 6 lít, hàng nhận tem 5 lít. Giờ shop sửa mô tả thành 5 lít rồi, tôi phải làm sao?"
+        },
+        {
+          "source": "latestBuyerMessage",
+          "detail": "Lúc đặt mô tả ghi 6 lít, giờ shop sửa thành 5 lít. Tôi nhận nồi 5 lít; bước tiếp theo là gì?"
+        }
+      ],
+      "missingEvidence": [
+        "Bản lưu mô tả sản phẩm tại thời điểm đặt hàng"
+      ],
+      "messageToBuyer": "Vui lòng cung cấp bản lưu mô tả sản phẩm tại thời điểm đặt hàng để chúng tôi có thể xử lý khiếu nại của bạn.",
+      "messageToSeller": "Bạn cần cung cấp bằng chứng liên quan đến mô tả sản phẩm lúc đặt hàng để hỗ trợ giải quyết khiếu nại này."
+    },
+    "usage": {
+      "input_tokens": 1110,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 327,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 1437
+    },
+    "source": "openai_responses_api",
+    "mockedActions": true
+  },
+  "toolNameNormalization": {
+    "originalSha256": "c4c05a9e1c98899cf73408b33147fb5f2a1e305f66c425b72f1fc6f3ff28d05b",
+    "normalizedFields": [
+      "analysis.decision",
+      "state.history[0].action",
+      "policyActions[0].action",
+      "trace.aiRecommendation",
+      "trace.policyActions[0].action",
+      "trace.analysis.decision"
+    ],
+    "note": "Chỉ chuẩn hoá tên tool theo đề. Nội dung trả lời, mã phản hồi và thời điểm gốc được giữ nguyên. Bản gốc được lưu ngoài thư mục bài nộp; các enum được ghi rõ trong normalizedFields."
+  }
+}

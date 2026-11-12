@@ -1,0 +1,12 @@
+{
+  "name": "problemsolver-track4-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Fictional AI complaint UX lab; Node.js 22, no dependencies.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/*.test.mjs"
+  }
+}

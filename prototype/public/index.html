@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ProblemSolver — prototype trợ lý khiếu nại trung lập, LAB5 track 4.">
+  <title>ProblemSolver · Claim Assist</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <div class="demo-bar">
+    <div class="demo-controls">
+      <span class="demo-label"><span class="tiny-dot"></span> BÀN DEMO · DỮ LIỆU GIẢ</span>
+      <label for="scenario-select">Tình huống</label>
+      <select id="scenario-select" aria-label="Chọn tình huống mô phỏng"><option>Đang tải hồ sơ…</option></select>
+      <label for="mode-select">Phân tích</label>
+      <select id="mode-select"><option value="simulation">Mô phỏng — không gọi AI</option><option value="live">AI thật — cần API key trên server</option></select>
+      <button id="export-evidence" class="toolbar-button" disabled>Xuất log AI thật <span id="trace-count">0</span></button>
+    </div>
+    <p id="connection-status">Đang kiểm tra kết nối…</p>
+  </div>
+
+  <header class="site-header">
+    <a href="/" class="brand" aria-label="ProblemSolver, trang chính"><span class="brand-mark">p<span>✓</span></span><span>ProblemSolver<small>CLAIM ASSIST</small></span></a>
+    <div class="header-meta"><span class="neutral-tag">LAB5 / TRACK 04</span><span>L3A · 4 thành viên</span></div>
+  </header>
+
+  <main>
+    <div class="page-heading">
+      <div><p class="eyebrow">TRỢ LÝ KHIẾU NẠI TRUNG LẬP</p><h1>Đúng bằng chứng.<br><span>Rõ bước tiếp theo.</span></h1><p class="intro">AI hỗ trợ đọc hồ sơ và xin thông tin. Quyết định tiền cần nhân viên có thẩm quyền duyệt.</p></div>
+      <div class="principle"><span class="balance-icon">⇌</span><div><strong>Hai phía đều được lắng nghe</strong><span>Lời doạ và lịch sử shop không thay thế bằng chứng.</span></div></div>
+    </div>
+
+    <nav class="view-tabs" aria-label="Góc nhìn hồ sơ"><button id="buyer-tab" class="view-tab active" aria-selected="true" aria-controls="buyer-view">01 <span>Người mua</span></button><button id="case-tab" class="view-tab" aria-selected="false" aria-controls="case-view">02 <span>Hồ sơ hai bên</span></button><span id="case-status" class="status-pill">Đang tải</span></nav>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+    <section id="buyer-view" class="view-panel" aria-labelledby="buyer-tab">
+      <div class="buyer-grid">
+        <div class="conversation-column">
+          <section class="card order-card"><div class="product-icon" aria-hidden="true">▤</div><div class="order-detail"><span id="buyer-order-id" class="eyebrow">HỒ SƠ</span><h2 id="buyer-product">Đang tải…</h2><p>Giá trị tranh chấp: <strong id="buyer-amount">—</strong></p></div><span class="outline-tag">Hàng không đúng mô tả</span></section>
+
+          <section class="card conversation-card">
+            <div class="card-header"><div><span class="section-label">01 / LẮNG NGHE</span><h2>Điều bạn đang gặp phải</h2></div><span class="mode-badge" id="analysis-mode-badge">Mô phỏng</span></div>
+            <div class="buyer-message"><span class="avatar buyer-avatar">B</span><div><div class="message-label">Người mua <span>Dữ liệu dựng</span></div><p id="buyer-message-preview"></p></div></div>
+            <div class="complaint-editor"><label for="complaint-input">Nội dung gửi trợ lý</label><textarea id="complaint-input" rows="3" maxlength="4000" placeholder="Mô tả chỗ chưa khớp với đơn hàng…"></textarea><div class="editor-actions"><button id="correct-claim" class="text-button"><span class="marker">3</span> Sửa / bổ sung nhận định <span class="principle-code">G9</span></button><button id="analyze-claim" class="primary-button">Phân tích khiếu nại <span aria-hidden="true">↗</span></button></div></div>
+            <div id="analysis-loading" class="loading-state" hidden><span class="spinner"></span><span>Đang đối chiếu khiếu nại với bản mô tả lúc đặt…</span></div>
+            <div id="analysis-result" hidden>
+              <div class="assistant-message"><span class="avatar assistant-avatar">AI</span><div><div class="message-label">Trợ lý hỗ trợ <span id="response-mode-label">Mô phỏng</span></div><p id="ai-buyer-message"></p></div></div>
+              <div class="uncertainty-panel"><div class="uncertainty-heading"><span class="marker">2</span><strong id="decision-label">Cần thêm căn cứ</strong><span class="principle-code">G10</span></div><p id="analysis-reason"></p><ul id="missing-evidence"></ul><p class="no-verdict">Đây là hướng xử lý tiếp theo, chưa phải phán quyết bên nào đúng hoặc sai.</p></div>
+              <div class="next-actions"><button id="yeu-cau-bang-chung" class="secondary-button">Gửi mẫu xin bằng chứng</button><button id="chuyen-truong-nhom" class="secondary-button">Chuyển nhân viên</button><button id="rut-chuyen-truong-nhom" class="text-button" hidden>↶ Rút chuyển hồ sơ</button></div>
+              <p id="action-state-note" class="fine-print">Thông báo và các thao tác trong prototype đều là mô phỏng.</p>
+              <div id="live-receipt" class="live-receipt" hidden><span class="tiny-dot"></span><span id="live-receipt-text"></span></div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="proof-column">
+          <section class="card evidence-card"><div class="card-header"><div><span class="section-label">02 / ĐỐI CHIẾU</span><h2><span class="marker">1</span> Căn cứ có thể kiểm tra</h2></div><span class="principle-code">G11</span></div><div class="source-block original-source"><span class="source-label"><span class="tiny-dot"></span> MÔ TẢ LÚC ĐẶT · NGUỒN ƯU TIÊN</span><blockquote id="original-description">—</blockquote><p id="original-timestamp" class="source-timestamp"></p></div><div class="source-block current-source"><span class="source-label">MÔ TẢ HIỆN TẠI · CHỈ ĐỐI CHIẾU</span><blockquote id="current-description">—</blockquote><p id="current-timestamp" class="source-timestamp"></p></div><div class="proof-list"><h3>Bằng chứng người mua</h3><ul id="buyer-evidence"></ul></div><p class="source-warning">Không có bản lúc đặt → không suy đoán bằng mô tả hiện tại.</p></section>
+          <section class="card deadline-card"><span class="section-label">MỐC THỜI GIAN MÔ PHỎNG</span><div class="deadline-line"><span>Hạn người mua gửi yêu cầu</span><strong id="claim-deadline">—</strong></div><p id="remaining-time" class="remaining-time"></p><div class="deadline-line"><span>Hạn phản hồi người bán</span><strong id="buyer-seller-deadline">—</strong></div><div class="deadline-line"><span>Nhân viên cập nhật trước</span><strong id="reviewer-deadline">—</strong></div><p class="fine-print" id="policy-note"></p><p class="fine-print">Chuyển nhân viên không đồng nghĩa đã gửi yêu cầu trả hàng hoặc tự gia hạn. Mốc cập nhật không phải cam kết đã giải quyết.</p></section>
+        </aside>
+      </div>
+    </section>
+
+    <section id="case-view" class="view-panel" aria-labelledby="case-tab" hidden>
+      <div class="case-overview"><div><p class="eyebrow" id="case-order-id">HỒ SƠ</p><h2 id="case-product">—</h2></div><p id="case-analysis-summary">Chọn phân tích ở góc nhìn người mua để xem đề xuất.</p></div>
+      <div class="case-grid">
+        <section class="card party-card"><div class="card-header"><div><span class="section-label">NGƯỜI MUA</span><h2>Yêu cầu & bằng chứng</h2></div><span class="party-dot buyer-dot"></span></div><p id="case-buyer-message" class="party-message"></p><ul id="case-buyer-evidence" class="evidence-list"></ul><div class="small-source"><h3>Bản mô tả lúc đặt</h3><p id="case-original-description"></p><span id="case-original-time" class="source-timestamp"></span></div></section>
+        <section class="card party-card"><div class="card-header"><div><span class="section-label">NGƯỜI BÁN</span><h2>Cơ hội phản hồi ngang nhau</h2></div><span id="seller-response-status" class="status-pill">Chờ phản hồi</span></div><div class="seller-notification"><span class="small-label">THÔNG BÁO NGƯỜI BÁN THẤY</span><p id="ai-seller-message">Vui lòng đối chiếu mô tả lúc đặt và cung cấp căn cứ cho phần đang tranh chấp.</p><strong id="seller-deadline">—</strong></div><ul id="seller-evidence" class="evidence-list"></ul><label for="seller-response">Phản hồi người bán <span class="fine-print">(vai trò mô phỏng)</span></label><textarea id="seller-response" rows="3" maxlength="4000" placeholder="Ví dụ: Shop gửi bản mô tả lúc đặt và ảnh tem sản phẩm…"></textarea><button id="send-seller-response" class="secondary-button">Gửi phản hồi người bán</button></section>
+      </div>
+      <section class="card review-card"><div class="review-title"><div><span class="section-label">03 / CON NGƯỜI QUYẾT ĐỊNH</span><h2>Duyệt tác động đến tiền</h2></div><span class="outline-tag">Mô phỏng nhân viên có thẩm quyền</span></div><div class="review-grid"><div><p class="review-description">Người mua không có quyền tự duyệt hoàn tiền. AI không được tự chuyển tiền hoặc đóng khiếu nại.</p><ul id="review-checklist" class="review-checklist"></ul><div class="forbidden-notice"><strong>Ngoài thẩm quyền: phạt / khoá shop.</strong><span>Nghi hàng giả được chuyển qua trưởng nhóm để định tuyến chuyên trách; không hứa kết quả xử phạt.</span></div></div><div class="review-form"><label for="review-reason">Lý do của nhân viên duyệt</label><textarea id="review-reason" rows="2" maxlength="1500" placeholder="Nêu bằng chứng hai bên và căn cứ của quyết định…"></textarea><label class="checkbox-label"><input id="review-confirm" type="checkbox"><span>Tôi đã đối chiếu bản lúc đặt, đọc phản hồi hai bên và xác nhận tác động tiền.</span></label><div class="review-actions"><button id="soan-hoan-tien" class="primary-button" disabled>Duyệt hoàn tiền mô phỏng</button><button id="tu-choi-khieu-nai" class="secondary-button" disabled>Duyệt từ chối mô phỏng</button></div><p id="review-gate-note" class="fine-print">Chỉ mở khi đủ thông tin và có xác nhận của nhân viên.</p></div></div></section>
+      <section class="card history-card"><div class="card-header"><div><span class="section-label">DẤU VẾT XỬ LÝ</span><h2>Điều gì đã xảy ra?</h2></div><span class="neutral-tag">Thao tác nghiệp vụ đều giả lập</span></div><ol id="case-history" class="history-list"></ol></section>
+    </section>
+
+    <footer><span>ProblemSolver · L3A · LAB5</span><p>Prototype học tập độc lập. Dữ liệu, thời hạn và chính sách đều do nhóm dựng; không phải chính sách Shopee.</p><span>AI hướng dẫn. Người có thẩm quyền quyết định.</span></footer>
+  </main>
+</body>
+</html>
